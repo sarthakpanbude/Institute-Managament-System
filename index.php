@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | <?php echo APP_NAME; ?></title>
+    <title>Login | DNA- Da NEET Academy</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -54,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="auth-wrapper">
     <div class="auth-card glass">
         <div class="auth-header">
-            <h1 class="gradient-text">NEET Excel</h1>
+            <img src="assets/img/logo.png" alt="DNA Logo" style="width: 120px; margin-bottom: 20px;">
+            <h1 class="gradient-text" style="font-size: 2.2rem;">DNA- Da NEET Academy</h1>
             <p style="color: var(--text-dim)">Excellence in Medical Preparation</p>
         </div>
 
@@ -67,21 +68,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="" method="POST">
             <div class="form-group">
                 <label>Username or Email</label>
-                <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                </div>
             </div>
 
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                </div>
             </div>
 
             <div class="form-group">
                 <label>Portal Role</label>
-                <select name="role" class="form-control">
-                    <option value="student">Student Portal</option>
-                    <option value="teacher">Faculty Portal</option>
-                    <option value="admin">Administrator</option>
-                </select>
+                <div class="input-with-icon">
+                    <i class="fas fa-users-cog"></i>
+                    <select name="role" class="form-control">
+                        <option value="admin">Administrator</option>
+                        <option value="student">Student Portal</option>
+                        <option value="teacher">Faculty Portal</option>
+                    </select>
+                </div>
             </div>
 
             <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
@@ -90,7 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <div style="margin-top: 30px; text-align: center; font-size: 0.85rem; color: var(--text-dim);">
-            <p>Don't have an account? <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Contact Center</a></p>
+            <p>New Admin? <a href="register.php" style="color: var(--primary); text-decoration: none; font-weight: 600;">Register as Admin</a></p>
+            <p style="margin-top: 10px;">Student registration? <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Contact Center</a></p>
         </div>
     </div>
 </div>

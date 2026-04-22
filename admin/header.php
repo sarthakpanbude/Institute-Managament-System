@@ -139,7 +139,8 @@ $pageTitle = $pageTitle ?? 'Dashboard';
 <div class="dashboard-container">
     <aside class="sidebar glass">
         <div class="sidebar-brand">
-            <h2 class="gradient-text">NEET Excel</h2>
+            <img src="../assets/img/logo.png" alt="DNA Logo" style="width: 60px; margin-bottom: 10px;">
+            <h2 class="gradient-text" style="font-size: 1.2rem;">DNA- Da NEET Academy</h2>
         </div>
         <ul class="sidebar-nav">
             <li class="nav-item">
