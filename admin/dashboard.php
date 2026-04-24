@@ -62,7 +62,7 @@ require_once 'header.php';
                 <div class="card-header">
                     <h2>Upcoming Tests</h2>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px;">
                     <div style="border-left: 4px solid var(--primary); padding-left: 15px;">
                         <p style="font-weight: 600;">Biology Mock #4</p>
                         <p style="font-size: 0.8rem; color: var(--text-dim);">Tomorrow, 10:00 AM • Batch Alpha</p>
@@ -71,10 +71,14 @@ require_once 'header.php';
                         <p style="font-weight: 600;">Physics Full Syllabus</p>
                         <p style="font-size: 0.8rem; color: var(--text-dim);">22nd April • All Batches</p>
                     </div>
-                    <div style="border-left: 4px solid var(--accent); padding-left: 15px;">
-                        <p style="font-weight: 600;">Chemistry (Organic)</p>
-                        <p style="font-size: 0.8rem; color: var(--text-dim);">25th April • Batch Gamma</p>
-                    </div>
+                </div>
+
+                <div class="card-header" style="border-top: 1px solid var(--glass-border); pt: 20px;">
+                    <h2>Center Information</h2>
+                </div>
+                <div style="font-size: 0.9rem; color: var(--text-dim);">
+                    <p style="margin-bottom: 10px;"><i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 10px;"></i> 1st floor, Maruti Plaza, B wing, Vidyavikas Circle, Gangapur Rd, Nashik, Maharashtra 422005</p>
+                    <p><i class="fas fa-phone-alt" style="color: var(--primary); margin-right: 10px;"></i> 070204 61661</p>
                 </div>
             </div>
         </div>

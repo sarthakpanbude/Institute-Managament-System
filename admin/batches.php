@@ -11,7 +11,9 @@ if (isset($_POST['add_batch'])) {
     $start = $_POST['start_date'];
     $end = $_POST['end_date'];
 
-    if (createBatch($pdo, $name, $desc, $start, $end)) {
+    $fees = $_POST['fees'] ?? 0;
+
+    if (createBatch($pdo, $name, $desc, $start, $end, $fees)) {
         $msg = '<div class="badge badge-success" style="padding: 10px; margin-bottom: 20px;">Batch created successfully!</div>';
     }
 }
@@ -38,9 +40,13 @@ $batches = getAllBatches($pdo);
             <span class="badge badge-success">Active</span>
         </div>
         <h3 style="font-size: 1.4rem; margin-bottom: 5px;"><?php echo $b['name']; ?></h3>
-        <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 20px;">
+        <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 10px;">
             <?php echo $b['description']; ?>
         </p>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">₹<?php echo number_format($b['fees'], 2); ?></span>
+            <small style="color: var(--text-dim);">+ 18% GST</small>
+        </div>
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 15px; font-size: 0.85rem; color: var(--text-dim);">
             <span><i class="far fa-calendar-alt"></i> <?php echo date('M Y', strtotime($b['start_date'])); ?></span>
             <span><i class="fas fa-users"></i> 0 Students</span>
@@ -73,6 +79,13 @@ $batches = getAllBatches($pdo);
                 <div class="form-group">
                     <label>End Date</label>
                     <input type="date" name="end_date" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Course Fees (Base Amount)</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-indian-rupee-sign"></i>
+                    <input type="number" name="fees" class="form-control" placeholder="0.00" step="0.01" required>
                 </div>
             </div>
             <button type="submit" name="add_batch" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;">
