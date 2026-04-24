@@ -6,11 +6,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Color Palette */
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #ec4899;
-    --dark-bg: #0f172a;
+    /* Color Palette - Updated to match DNA Logo */
+    --primary: #94152a; /* Maroon/Red from Cap */
+    --primary-dark: #7a0e21;
+    --secondary: #2d2663; /* Deep Blue/Purple from DNA text */
+    --dark-bg: #0b0e14;
     --dark-card: #1e293b;
     --light-bg: #f8fafc;
     --text-main: #f1f5f9;
