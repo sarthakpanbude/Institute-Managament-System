@@ -51,9 +51,12 @@ $pageTitle = $pageTitle ?? 'My Portal';
 
 <div class="student-container">
     <div class="header-section">
-        <div>
-            <h2 class="gradient-text">Hello, <?php echo $_SESSION['full_name']; ?></h2>
-            <p style="color: var(--text-dim)">Track your NEET progress and materials.</p>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../assets/img/logo.png" alt="DNA Logo" style="width: 60px;">
+            <div>
+                <h2 class="gradient-text">Hello, <?php echo $_SESSION['full_name']; ?></h2>
+                <p style="color: var(--text-dim)">Track your NEET progress and materials.</p>
+            </div>
         </div>
         <div style="display: flex; gap: 15px;">
             <a href="../logout.php" class="btn-primary" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444;">
