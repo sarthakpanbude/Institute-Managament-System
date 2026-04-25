@@ -81,7 +81,7 @@ $app_name = getSetting($pdo, 'app_name', 'DNA- Da NEET Academy');
         <div class="portal-selection">
             <a href="admin_login.php" class="portal-card glass animate-fade-in">
                 <div class="portal-icon"><i class="fas fa-user-shield"></i></div>
-                <h2>Administrator</h2>
+                <h2>Admin Portal</h2>
                 <p>Management, Analytics, Finance, and System Configuration</p>
                 <div class="btn-primary" style="display: inline-flex;">Enter Admin Portal <i class="fas fa-chevron-right" style="margin-left: 10px;"></i></div>
             </a>

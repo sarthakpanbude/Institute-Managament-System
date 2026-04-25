@@ -140,74 +140,74 @@ $pageTitle = $pageTitle ?? 'Dashboard';
 <div class="dashboard-container">
     <aside class="sidebar glass">
         <div class="sidebar-brand">
-            <img src="../assets/img/logo.png" alt="Logo" style="width: 60px; margin-bottom: 10px;">
-            <h2 class="gradient-text" style="font-size: 1.2rem;"><?php echo $app_name; ?></h2>
+            <img src="../assets/img/logo.png" alt="Logo" style="width: 70px; margin-bottom: 15px;">
+            <h2 class="gradient-text" style="font-size: 1.3rem;"><?php echo $app_name; ?></h2>
         </div>
+
         <ul class="sidebar-nav">
             <li class="nav-item">
-                <a href="dashboard.php" class="nav-link <?php echo ($pageTitle == 'Dashboard') ? 'active' : ''; ?>">
-                    <i class="fas fa-home"></i> Dashboard
+                <a href="dashboard.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'dashboard.php') ? 'active' : ''; ?>">
+                    <i class="fas fa-th-large"></i> Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a href="students.php" class="nav-link <?php echo ($pageTitle == 'Manage Students') ? 'active' : ''; ?>">
-                    <i class="fas fa-users"></i> Students
+                <a href="students.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'students.php') ? 'active' : ''; ?>">
+                    <i class="fas fa-user-graduate"></i> Students
                 </a>
             </li>
             <li class="nav-item">
-                <a href="batches.php" class="nav-link <?php echo ($pageTitle == 'Manage Batches') ? 'active' : ''; ?>">
+                <a href="batches.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'batches.php') ? 'active' : ''; ?>">
                     <i class="fas fa-layer-group"></i> Batches
                 </a>
             </li>
             <li class="nav-item">
-                <a href="fees.php" class="nav-link <?php echo ($pageTitle == 'Fee Management') ? 'active' : ''; ?>">
+                <a href="fee_management.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'fee_management.php') ? 'active' : ''; ?>">
                     <i class="fas fa-file-invoice-dollar"></i> Fee Management
                 </a>
             </li>
             <li class="nav-item">
-                <a href="exams.php" class="nav-link <?php echo ($pageTitle == 'Exams & Results') ? 'active' : ''; ?>">
-                    <i class="fas fa-vial"></i> Exams & Results
+                <a href="exams.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'exams.php') ? 'active' : ''; ?>">
+                    <i class="fas fa-pen-nib"></i> Exams & Results
                 </a>
             </li>
             <li class="nav-item">
-                <a href="attendance.php" class="nav-link <?php echo ($pageTitle == 'Attendance') ? 'active' : ''; ?>">
+                <a href="attendance.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'attendance.php') ? 'active' : ''; ?>">
                     <i class="fas fa-calendar-check"></i> Attendance
                 </a>
             </li>
             <li class="nav-item">
-                <a href="notifications.php" class="nav-link <?php echo ($pageTitle == 'Notifications') ? 'active' : ''; ?>">
+                <a href="notifications.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'notifications.php') ? 'active' : ''; ?>">
                     <i class="fas fa-bell"></i> Push Notifications
                 </a>
             </li>
             <li class="nav-item">
-                <a href="materials.php" class="nav-link <?php echo ($pageTitle == 'Study Materials') ? 'active' : ''; ?>">
+                <a href="study_material.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'study_material.php') ? 'active' : ''; ?>">
                     <i class="fas fa-book"></i> Study Materials
                 </a>
             </li>
             <li class="nav-item">
-                <a href="settings.php" class="nav-link <?php echo ($pageTitle == 'Settings') ? 'active' : ''; ?>">
+                <a href="settings.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'settings.php') ? 'active' : ''; ?>">
                     <i class="fas fa-cog"></i> Settings & PWA
                 </a>
             </li>
-            <li class="nav-item" style="margin-top: 40px;">
-                <a href="../logout.php" class="nav-link" style="color: #ef4444;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </li>
         </ul>
+
+        <div class="sidebar-footer">
+            <a href="../logout.php" class="nav-link" style="color: #ef4444; background: rgba(239, 68, 68, 0.05);">
+                <i class="fas fa-sign-out-alt"></i> Logout System
+            </a>
+        </div>
     </aside>
 
     <main class="main-content">
         <header class="top-bar">
-            <div class="user-greeting">
-                <h1>Welcome Back, <span class="gradient-text">Admin</span></h1>
-                <p style="color: var(--text-dim)">Here's what's happening today.</p>
+            <div>
+                <h1 style="font-size: 1.8rem;"><?php echo $pageTitle; ?></h1>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Welcome back, <strong>Administrator</strong></p>
             </div>
-            <div class="user-profile" style="display: flex; align-items: center; gap: 15px;">
-                <div class="notifications">
-                    <i class="far fa-bell" style="font-size: 1.2rem; color: var(--text-dim);"></i>
-                </div>
-                <div class="avatar glass" style="width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border-color: var(--primary);">
+            <div class="user-profile glass">
+                <i class="far fa-bell" style="color: var(--text-dim); cursor: pointer;"></i>
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; border: 2px solid var(--glass-border);">
                     A
                 </div>
             </div>
