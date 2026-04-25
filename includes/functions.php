@@ -12,7 +12,7 @@ function getAllBatches($pdo) {
 /**
  * Get all students with filtering and pagination
  */
-function getAllStudents($pdo, $search = '', $batch_filter = '', $status_filter = '', $limit = 10, $offset = 0) {
+function getAllStudents($pdo, $search = '', $batch_filter = '', $status_filter = '', $session_filter = '', $limit = 10, $offset = 0) {
     $params = [];
     $where = " WHERE 1=1 ";
 
@@ -33,7 +33,12 @@ function getAllStudents($pdo, $search = '', $batch_filter = '', $status_filter =
         $params[] = $status_filter;
     }
 
-    $sql = "SELECT s.*, u.full_name, u.email, u.username, b.name as batch_name, i.id as invoice_id 
+    if (!empty($session_filter)) {
+        $where .= " AND b.session = ? ";
+        $params[] = $session_filter;
+    }
+
+    $sql = "SELECT s.*, u.full_name, u.email, u.username, b.name as batch_name, b.session as batch_session, i.id as invoice_id 
             FROM students s
             JOIN users u ON s.user_id = u.id
             LEFT JOIN batches b ON s.batch_id = b.id
@@ -50,7 +55,7 @@ function getAllStudents($pdo, $search = '', $batch_filter = '', $status_filter =
 /**
  * Count total students for pagination
  */
-function getTotalStudentsCount($pdo, $search = '', $batch_filter = '', $status_filter = '') {
+function getTotalStudentsCount($pdo, $search = '', $batch_filter = '', $status_filter = '', $session_filter = '') {
     $params = [];
     $where = " WHERE 1=1 ";
 
@@ -71,7 +76,15 @@ function getTotalStudentsCount($pdo, $search = '', $batch_filter = '', $status_f
         $params[] = $status_filter;
     }
 
-    $sql = "SELECT COUNT(*) FROM students s JOIN users u ON s.user_id = u.id $where";
+    if (!empty($session_filter)) {
+        $where .= " AND b.session = ? ";
+        $params[] = $session_filter;
+    }
+
+    $sql = "SELECT COUNT(*) FROM students s 
+            JOIN users u ON s.user_id = u.id 
+            LEFT JOIN batches b ON s.batch_id = b.id
+            $where";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchColumn();
@@ -80,9 +93,9 @@ function getTotalStudentsCount($pdo, $search = '', $batch_filter = '', $status_f
 /**
  * Create a new batch
  */
-function createBatch($pdo, $name, $desc, $start, $end, $fees = 0) {
-    $stmt = $pdo->prepare("INSERT INTO batches (name, description, start_date, end_date, fees) VALUES (?, ?, ?, ?, ?)");
-    return $stmt->execute([$name, $desc, $start, $end, $fees]);
+function createBatch($pdo, $name, $desc, $start, $end, $fees = 0, $session = 'Morning') {
+    $stmt = $pdo->prepare("INSERT INTO batches (name, description, start_date, end_date, fees, session) VALUES (?, ?, ?, ?, ?, ?)");
+    return $stmt->execute([$name, $desc, $start, $end, $fees, $session]);
 }
 
 /**

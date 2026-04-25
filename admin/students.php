@@ -34,9 +34,10 @@ $offset = ($page - 1) * $limit;
 $search = $_GET['search'] ?? '';
 $batch_filter = $_GET['batch_filter'] ?? '';
 $status_filter = $_GET['status_filter'] ?? '';
+$session_filter = $_GET['session_filter'] ?? '';
 
-$students = getAllStudents($pdo, $search, $batch_filter, $status_filter, $limit, $offset);
-$total_students_count = getTotalStudentsCount($pdo, $search, $batch_filter, $status_filter);
+$students = getAllStudents($pdo, $search, $batch_filter, $status_filter, $session_filter, $limit, $offset);
+$total_students_count = getTotalStudentsCount($pdo, $search, $batch_filter, $status_filter, $session_filter);
 $total_pages = ceil($total_students_count / $limit);
 $batches = getAllBatches($pdo);
 
@@ -105,12 +106,12 @@ $exams_this_week = getExamsThisWeekCount($pdo);
             <input type="text" name="search" value="<?php echo $search; ?>" class="form-control" placeholder="Search...">
         </div>
         <div class="form-group" style="flex: 1; min-width: 150px; margin-bottom: 0;">
-            <label style="font-size: 0.8rem;">Filter Batch</label>
-            <select name="batch_filter" class="form-control">
-                <option value="">All Batches</option>
-                <?php foreach ($batches as $b): ?>
-                    <option value="<?php echo $b['id']; ?>" <?php echo $batch_filter == $b['id'] ? 'selected' : ''; ?>><?php echo $b['name']; ?></option>
-                <?php endforeach; ?>
+            <label style="font-size: 0.8rem;">Filter Session</label>
+            <select name="session_filter" class="form-control">
+                <option value="">All Sessions</option>
+                <option value="Morning" <?php echo $session_filter == 'Morning' ? 'selected' : ''; ?>>Morning</option>
+                <option value="Afternoon" <?php echo $session_filter == 'Afternoon' ? 'selected' : ''; ?>>Afternoon</option>
+                <option value="Evening" <?php echo $session_filter == 'Evening' ? 'selected' : ''; ?>>Evening</option>
             </select>
         </div>
         <div class="form-group" style="flex: 1; min-width: 150px; margin-bottom: 0;">
@@ -157,7 +158,10 @@ $exams_this_week = getExamsThisWeekCount($pdo);
                 <td style="padding: 15px 20px;">
                     <div style="display: flex; flex-direction: column; gap: 5px;">
                         <span class="badge" style="background: rgba(99, 102, 241, 0.1); color: var(--primary); width: fit-content;">
-                            <i class="fas fa-layer-group"></i> <?php echo $s['batch_name'] ?: 'N/A'; ?>
+                            <i class="fas fa-layer-group"></i> <?php echo $s['batch_name'] ?: 'N/A'; ?> 
+                            <?php if($s['batch_session']): ?>
+                                <small style="opacity: 0.7;">(<?php echo $s['batch_session']; ?>)</small>
+                            <?php endif; ?>
                         </span>
                         <div style="display: flex; gap: 5px; flex-wrap: wrap;">
                             <?php if (hasStudentPendingFees($pdo, $s['id'])): ?>
@@ -210,9 +214,9 @@ $exams_this_week = getExamsThisWeekCount($pdo);
 <?php if ($total_pages > 1): ?>
 <div style="display: flex; justify-content: center; gap: 8px; margin-top: 30px;">
     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-        <a href="?page=<?php echo $i; ?>&search=<?php echo $search; ?>&batch_filter=<?php echo $batch_filter; ?>&status_filter=<?php echo $status_filter; ?>" 
-           class="<?php echo $page == $i ? 'btn-primary' : 'glass'; ?>" 
-           style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; text-decoration: none; border-radius: 10px; font-weight: bold;">
+        <a href="?page=<?php echo $i; ?>&search=<?php echo $search; ?>&status_filter=<?php echo $status_filter; ?>&session_filter=<?php echo $session_filter; ?>" 
+            class="<?php echo $page == $i ? 'btn-primary' : 'glass'; ?>" 
+            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; text-decoration: none; border-radius: 10px; font-weight: bold;">
             <?php echo $i; ?>
         </a>
     <?php endfor; ?>
