@@ -67,7 +67,8 @@ $pageTitle = $pageTitle ?? 'My Portal';
 
     <nav class="nav-chips">
         <a href="dashboard.php" class="chip <?php echo ($pageTitle == 'My Progress') ? 'active' : ''; ?>">Dashboard</a>
-        <a href="#" class="chip">Study Material</a>
-        <a href="#" class="chip">Test History</a>
-        <a href="#" class="chip">Schedule</a>
+        <a href="materials.php" class="chip <?php echo ($pageTitle == 'Study Material') ? 'active' : ''; ?>">Study Material</a>
+        <a href="exams.php" class="chip <?php echo ($pageTitle == 'Exams') ? 'active' : ''; ?>">Exams</a>
+        <a href="fees.php" class="chip <?php echo ($pageTitle == 'Fee Payment') ? 'active' : ''; ?>">Fee Payment</a>
+        <a href="profile.php" class="chip <?php echo ($pageTitle == 'My Profile') ? 'active' : ''; ?>">Profile</a>
     </nav>

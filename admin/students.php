@@ -6,10 +6,14 @@ require_once '../includes/functions.php';
 // Handle Student Actions (Same as before)
 $msg = '';
 if (isset($_POST['add_student'])) {
-    if (registerStudent($pdo, $_POST)) {
-        $msg = '<div class="badge badge-success" style="padding: 10px; margin-bottom: 20px; width: 100%; text-align: center;">Student registered successfully!</div>';
-    } else {
-        $msg = '<div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center;">Error while saving student.</div>';
+    try {
+        if (registerStudent($pdo, $_POST)) {
+            $msg = '<div class="badge badge-success" style="padding: 10px; margin-bottom: 20px; width: 100%; text-align: center;">Student registered successfully!</div>';
+        } else {
+            $msg = '<div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center;">Error while saving student.</div>';
+        }
+    } catch (Exception $e) {
+        $msg = '<div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center;">Error: ' . $e->getMessage() . '</div>';
     }
 }
 
@@ -169,7 +173,7 @@ $exams_this_week = getExamsThisWeekCount($pdo);
                                     <i class="fas fa-exclamation-triangle"></i> Fee Pending
                                 </span>
                             <?php endif; ?>
-                            <?php if (hasStudentTestsThisWeek($pdo, $s['batch_id'])): ?>
+                            <?php if (hasStudentExamsThisWeek($pdo, $s['batch_id'])): ?>
                                 <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 0.7rem;" title="Exams Scheduled">
                                     <i class="fas fa-clock"></i> Exam this week
                                 </span>
@@ -242,11 +246,11 @@ $exams_this_week = getExamsThisWeekCount($pdo);
                 </div>
                 <div class="form-group">
                     <label>Username *</label>
-                    <input type="text" name="username" class="form-control" placeholder="johndoe123" required>
+                    <input type="text" name="username" class="form-control" placeholder="johndoe123" required autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label>Password *</label>
-                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••" required autocomplete="new-password">
                 </div>
                 <div class="form-group">
                     <label>Parent Name</label>

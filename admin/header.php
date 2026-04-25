@@ -144,7 +144,7 @@ $pageTitle = $pageTitle ?? 'Dashboard';
         </div>
         <ul class="sidebar-nav">
             <li class="nav-item">
-                <a href="dashboard.php" class="nav-link active">
+                <a href="dashboard.php" class="nav-link <?php echo ($pageTitle == 'Dashboard') ? 'active' : ''; ?>">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
             </li>
@@ -159,18 +159,38 @@ $pageTitle = $pageTitle ?? 'Dashboard';
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="fees.php" class="nav-link <?php echo ($pageTitle == 'Fee Management') ? 'active' : ''; ?>">
                     <i class="fas fa-file-invoice-dollar"></i> Fee Management
                 </a>
             </li>
             <li class="nav-item">
-                <a href="tests.php" class="nav-link <?php echo ($pageTitle == 'Mock Tests') ? 'active' : ''; ?>">
+                <a href="exams.php" class="nav-link <?php echo ($pageTitle == 'Exams & Results') ? 'active' : ''; ?>">
                     <i class="fas fa-vial"></i> Exams & Results
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="attendance.php" class="nav-link <?php echo ($pageTitle == 'Attendance') ? 'active' : ''; ?>">
+                    <i class="fas fa-calendar-check"></i> Attendance
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notifications.php" class="nav-link <?php echo ($pageTitle == 'Notifications') ? 'active' : ''; ?>">
+                    <i class="fas fa-bell"></i> Push Notifications
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="materials.php" class="nav-link <?php echo ($pageTitle == 'Study Materials') ? 'active' : ''; ?>">
                     <i class="fas fa-book"></i> Study Materials
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="logs.php" class="nav-link <?php echo ($pageTitle == 'Activity Logs') ? 'active' : ''; ?>">
+                    <i class="fas fa-clipboard-list"></i> Audit Logs
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.php" class="nav-link <?php echo ($pageTitle == 'Settings') ? 'active' : ''; ?>">
+                    <i class="fas fa-cog"></i> Settings & PWA
                 </a>
             </li>
             <li class="nav-item" style="margin-top: 40px;">

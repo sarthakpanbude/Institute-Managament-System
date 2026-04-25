@@ -1,0 +1,13 @@
+[2026-04-25 08:24:16] [System Administrator] Exam Scheduled: Title: biology , Date: 2026-04-09
+[2026-04-25 08:29:33] [System Administrator] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin' for key 'username'
+[2026-04-25 08:32:06] [System Administrator] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin' for key 'username'
+[2026-04-25 08:34:33] [System] Student Registered: Name: Test Student, Email: test@example.com
+[2026-04-25 08:38:40] [System] Payment Recorded: Invoice ID: 1, Amount: ₹11800.00, Method: cash
+[2026-04-25 08:38:52] [System] Payment Recorded: Invoice ID: 1, Amount: ₹11800.00, Method: cash
+[2026-04-25 08:39:26] [System] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'testuser' for key 'username'
+[2026-04-25 08:39:45] [System] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin' for key 'username'
+[2026-04-25 08:39:58] [System] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin' for key 'username'
+[2026-04-25 08:40:17] [System] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin' for key 'username'
+[2026-04-25 08:43:02] [System] Student Registered: Name: Duplicate Test Student, Email: duplicate@example.com
+[2026-04-25 08:43:40] [System] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin' for key 'username'
+[2026-04-25 08:44:41] [System] Student Registration Failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin' for key 'username'

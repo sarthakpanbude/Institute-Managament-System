@@ -3,99 +3,115 @@ $pageTitle = 'My Progress';
 require_once 'header.php';
 require_once '../includes/functions.php';
 
-// Fetch Student Batch
-$stmt = $pdo->prepare("SELECT b.name, b.description FROM students s JOIN batches b ON s.batch_id = b.id WHERE s.user_id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$batch = $stmt->fetch();
+$student = getStudentByUserId($pdo, $_SESSION['user_id']);
+$stats = getStudentStats($pdo, $student['id']);
+$upcoming = getUpcomingExams($pdo, 3);
+$performance = getStudentPerformanceData($pdo, $student['id']);
 ?>
 
-<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
-    <div class="glass" style="padding: 30px;">
-        <div class="card-header">
-            <h3>Academic Performance</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+    <div class="glass" style="padding: 25px; display: flex; align-items: center; gap: 20px;">
+        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <i class="fas fa-chart-line"></i>
         </div>
-        <div style="margin-top: 20px;">
-            <div style="margin-bottom: 25px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>Biology (Botany + Zoology)</span>
-                    <span style="color: var(--accent);">88%</span>
-                </div>
-                <div style="height: 8px; width: 100%; background: rgba(255,255,255,0.05); border-radius: 10px;">
-                    <div style="height: 100%; width: 88%; background: var(--accent); border-radius: 10px;"></div>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 25px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>Physics (Mechanics)</span>
-                    <span style="color: var(--primary);">72%</span>
-                </div>
-                <div style="height: 8px; width: 100%; background: rgba(255,255,255,0.05); border-radius: 10px;">
-                    <div style="height: 100%; width: 72%; background: var(--primary); border-radius: 10px;"></div>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 25px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>Chemistry (Organic)</span>
-                    <span style="color: var(--secondary);">82%</span>
-                </div>
-                <div style="height: 8px; width: 100%; background: rgba(255,255,255,0.05); border-radius: 10px;">
-                    <div style="height: 100%; width: 82%; background: var(--secondary); border-radius: 10px;"></div>
-                </div>
-            </div>
+        <div>
+            <h3 style="font-size: 1.8rem;"><?php echo $stats['avg_score']; ?>%</h3>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">Average Score</p>
         </div>
     </div>
+    <div class="glass" style="padding: 25px; display: flex; align-items: center; gap: 20px;">
+        <div class="stat-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
+            <i class="fas fa-vial"></i>
+        </div>
+        <div>
+            <h3 style="font-size: 1.8rem;"><?php echo $stats['tests_done']; ?></h3>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">Tests Completed</p>
+        </div>
+    </div>
+    <div class="glass" style="padding: 25px; display: flex; align-items: center; gap: 20px;">
+        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div>
+            <h3 style="font-size: 1.8rem;"><?php echo $stats['pending_fees']; ?></h3>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">Pending Fees</p>
+        </div>
+    </div>
+</div>
 
-    <div>
-        <div class="glass" style="padding: 25px; margin-bottom: 30px;">
-            <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px;">Current Batch</p>
-            <h4 style="font-size: 1.2rem; color: var(--primary);"><?php echo $batch['name'] ?? 'Not Assigned'; ?></h4>
-            <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 5px;"><?php echo $batch['description'] ?? ''; ?></p>
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+    <div class="glass" style="padding: 25px;">
+        <div class="card-header">
+            <h2>My Performance</h2>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </div>
+        <canvas id="studentPerfChart" height="150"></canvas>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="glass" style="padding: 25px;">
+            <div class="card-header">
+                <h3>Upcoming Exams</h3>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <?php foreach ($upcoming as $exam): ?>
+                <div style="border-left: 3px solid var(--primary); padding-left: 15px;">
+                    <div style="font-weight: 600; font-size: 0.95rem;"><?php echo $exam['title']; ?></div>
+                    <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 3px;">
+                        <?php echo date('d M, Y', strtotime($exam['exam_date'])); ?> • <?php echo $exam['duration_minutes']; ?> Min
+                    </div>
+                </div>
+                <?php endforeach; if (empty($upcoming)) echo '<p style="color: var(--text-dim); font-size: 0.9rem;">No upcoming exams.</p>'; ?>
+            </div>
+            <a href="exams.php" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px; font-size: 0.85rem; padding: 10px;">
+                Enter Exam Portal
+            </a>
         </div>
 
         <div class="glass" style="padding: 25px;">
-            <h3>Upcoming Mock Tests</h3>
-            <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
-                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border-left: 3px solid var(--primary);">
-                    <p style="font-weight: 600; font-size: 0.95rem;">Full Length NEET #4</p>
-                    <p style="color: var(--text-dim); font-size: 0.8rem;">24th April • 10:00 AM</p>
+            <div class="card-header">
+                <h3>Current Batch</h3>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="avatar" style="width: 45px; height: 45px; border-radius: 12px; background: rgba(99, 102, 241, 0.1); display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: bold;">
+                    <?php echo substr($student['batch_name'], 0, 1); ?>
                 </div>
-                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border-left: 3px solid var(--secondary);">
-                    <p style="font-weight: 600; font-size: 0.95rem;">Biology Unit Test</p>
-                    <p style="color: var(--text-dim); font-size: 0.8rem;">28th April • 02:00 PM</p>
+                <div>
+                    <div style="font-weight: 600;"><?php echo $student['batch_name']; ?></div>
+                    <div style="font-size: 0.75rem; color: var(--text-dim);">Academic Year 2026</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="glass" style="margin-top: 40px; padding: 30px;">
-    <h3>Recent Test Scores</h3>
-    <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
-        <tr style="border-bottom: 1px solid var(--glass-border); color: var(--text-dim);">
-            <th style="padding: 15px; text-align: left;">Date</th>
-            <th style="padding: 15px; text-align: left;">Title</th>
-            <th style="padding: 15px; text-align: left;">Score</th>
-            <th style="padding: 15px; text-align: left;">Percentile</th>
-            <th style="padding: 15px; text-align: left;">Action</th>
-        </tr>
-        <tr style="border-bottom: 1px solid var(--glass-border);">
-            <td style="padding: 15px;">15 Apr</td>
-            <td style="padding: 15px;">Physics Kinematics</td>
-            <td style="padding: 15px;">164 / 180</td>
-            <td style="padding: 15px;"><span class="badge badge-success">98.2%</span></td>
-            <td style="padding: 15px;"><a href="#" class="gradient-text">View Analysis</a></td>
-        </tr>
-        <tr>
-            <td style="padding: 15px;">08 Apr</td>
-            <td style="padding: 15px;">Botany Photosynthesis</td>
-            <td style="padding: 15px;">152 / 180</td>
-            <td style="padding: 15px;"><span class="badge badge-success">94.5%</span></td>
-            <td style="padding: 15px;"><a href="#" class="gradient-text">View Analysis</a></td>
-        </tr>
-    </table>
-</div>
+<script>
+const ctx = document.getElementById('studentPerfChart').getContext('2d');
+const labels = <?php echo json_encode(array_column($performance, 'month')); ?>;
+const data = <?php echo json_encode(array_column($performance, 'percentage')); ?>;
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels.length ? labels : ['Mock 1', 'Mock 2', 'Mock 3'],
+        datasets: [{
+            label: 'Score %',
+            data: data.length ? data : [65, 78, 82],
+            borderColor: '#94152a',
+            tension: 0.4,
+            fill: true,
+            backgroundColor: 'rgba(148, 21, 42, 0.1)'
+        }]
+    },
+    options: {
+        plugins: { legend: { display: false } },
+        scales: {
+            y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+        }
+    }
+});
+</script>
 
 </body>
 </html>
