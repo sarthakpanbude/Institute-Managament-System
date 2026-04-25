@@ -148,11 +148,33 @@ try {
             file_type ENUM('pdf', 'video', 'image', 'other') DEFAULT 'pdf',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (batch_id) REFERENCES batches(id) ON DELETE CASCADE
+        )",
+        "settings" => "CREATE TABLE IF NOT EXISTS settings (
+            setting_key VARCHAR(50) PRIMARY KEY,
+            setting_value TEXT,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )"
     ];
 
     foreach ($tables as $name => $sql) {
         $pdo->exec($sql);
+    }
+
+    // Default Settings
+    $defaultSettings = [
+        'app_name' => 'DNA- Da NEET Academy',
+        'contact_email' => 'info@dna-academy.com',
+        'contact_phone' => '+91 9876543210',
+        'address' => '123, Science Park, Education Hub, India',
+        'footer_text' => '© 2026 DNA- Da NEET Academy. All rights reserved.'
+    ];
+
+    $checkSettings = $pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn();
+    if ($checkSettings == 0) {
+        $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?)");
+        foreach ($defaultSettings as $key => $value) {
+            $stmt->execute([$key, $value]);
+        }
     }
 
     // Migration: Handle existing role Enum update

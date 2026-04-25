@@ -184,11 +184,6 @@ $pageTitle = $pageTitle ?? 'Dashboard';
                 </a>
             </li>
             <li class="nav-item">
-                <a href="logs.php" class="nav-link <?php echo ($pageTitle == 'Activity Logs') ? 'active' : ''; ?>">
-                    <i class="fas fa-clipboard-list"></i> Audit Logs
-                </a>
-            </li>
-            <li class="nav-item">
                 <a href="settings.php" class="nav-link <?php echo ($pageTitle == 'Settings') ? 'active' : ''; ?>">
                     <i class="fas fa-cog"></i> Settings & PWA
                 </a>

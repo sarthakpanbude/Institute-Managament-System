@@ -601,4 +601,20 @@ function logActivity($action, $details = '') {
     $logMsg = "[" . date('Y-m-d H:i:s') . "] [$user] $action: $details\n";
     file_put_contents(__DIR__ . '/../logs/activity.log', $logMsg, FILE_APPEND);
 }
+/**
+ * Get a specific setting value
+ */
+function getSetting($pdo, $key, $default = '') {
+    $stmt = $pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = ?");
+    $stmt->execute([$key]);
+    return $stmt->fetchColumn() ?: $default;
+}
+
+/**
+ * Update a setting value
+ */
+function updateSetting($pdo, $key, $value) {
+    $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = ?");
+    return $stmt->execute([$key, $value, $value]);
+}
 ?>
