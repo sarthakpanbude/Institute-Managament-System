@@ -18,10 +18,14 @@ if (isset($_POST['add_student'])) {
 }
 
 if (isset($_POST['update_student'])) {
-    if (updateStudent($pdo, $_POST['id'], $_POST)) {
-        $msg = '<div class="badge badge-success" style="padding: 10px; margin-bottom: 20px; width: 100%; text-align: center;">Student details updated!</div>';
-    } else {
-        $msg = '<div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center;">Error while updating student.</div>';
+    try {
+        if (updateStudent($pdo, $_POST['id'], $_POST)) {
+            $msg = '<div class="badge badge-success" style="padding: 10px; margin-bottom: 20px; width: 100%; text-align: center;">Student details updated!</div>';
+        } else {
+            $msg = '<div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center;">Error while updating student.</div>';
+        }
+    } catch (Exception $e) {
+        $msg = '<div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center;">Error: ' . $e->getMessage() . '</div>';
     }
 }
 

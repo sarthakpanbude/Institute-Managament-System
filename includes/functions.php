@@ -131,9 +131,11 @@ function registerStudent($pdo, $data) {
         sendInvoiceNotification($data['email'], $data['full_name'], "INV-" . time());
         return true;
     } catch (Exception $e) {
-        $pdo->rollBack();
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
         logActivity("Student Registration Failed", $e->getMessage());
-        return false;
+        throw $e;
     }
 }
 
@@ -177,9 +179,11 @@ function updateStudent($pdo, $id, $data) {
         logActivity("Student Updated", "ID: $id, Name: {$data['full_name']}");
         return true;
     } catch (Exception $e) {
-        $pdo->rollBack();
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
         logActivity("Student Update Failed", $e->getMessage());
-        return false;
+        throw $e;
     }
 }
 
