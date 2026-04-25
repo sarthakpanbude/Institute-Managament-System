@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
-// Authentication check would go here
+require_once __DIR__ . '/../includes/functions.php';
 
+$app_name = getSetting($pdo, 'app_name', 'DNA Academy');
 $pageTitle = $pageTitle ?? 'Dashboard';
 ?>
 <!DOCTYPE html>
@@ -9,7 +10,7 @@ $pageTitle = $pageTitle ?? 'Dashboard';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle; ?> | <?php echo APP_NAME; ?></title>
+    <title><?php echo $pageTitle; ?> | <?php echo $app_name; ?></title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -139,8 +140,8 @@ $pageTitle = $pageTitle ?? 'Dashboard';
 <div class="dashboard-container">
     <aside class="sidebar glass">
         <div class="sidebar-brand">
-            <img src="../assets/img/logo.png" alt="DNA Logo" style="width: 60px; margin-bottom: 10px;">
-            <h2 class="gradient-text" style="font-size: 1.2rem;">DNA- Da NEET Academy</h2>
+            <img src="../assets/img/logo.png" alt="Logo" style="width: 60px; margin-bottom: 10px;">
+            <h2 class="gradient-text" style="font-size: 1.2rem;"><?php echo $app_name; ?></h2>
         </div>
         <ul class="sidebar-nav">
             <li class="nav-item">
